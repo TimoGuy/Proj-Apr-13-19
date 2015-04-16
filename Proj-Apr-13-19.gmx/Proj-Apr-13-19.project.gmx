@@ -5,9 +5,24 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
+  <sprites name="sprites">
+    <sprite>sprites\spriteMaskVertical</sprite>
+    <sprite>sprites\spriteGroundSample</sprite>
+    <sprite>sprites\spriteWallSample</sprite>
+  </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <objects name="objects">
+    <object>objects\controlRoom</object>
+    <object>objects\objectPlayer</object>
+    <object>objects\parentGround</object>
+    <object>objects\objectGroundSample</object>
+    <object>objects\objectWallSample</object>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\roomInit</room>
+    <room>rooms\room0</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
