@@ -140,8 +140,8 @@ camy += dy;
           <argument>
             <kind>1</kind>
             <string>/// Apply camera to view
-view_xview[0] = camx - (view_wport[0] / 2);
-view_yview[0] = camy - (view_hport[0] / 2);
+view_xview[0] = round(camx - (view_wport[0] / 2));
+view_yview[0] = round(camy - (view_hport[0] / 2));
 </string>
           </argument>
         </arguments>
