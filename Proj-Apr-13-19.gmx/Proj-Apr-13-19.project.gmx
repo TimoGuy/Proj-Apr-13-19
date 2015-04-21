@@ -14,11 +14,11 @@
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\controlRoom</object>
-    <object>objects\objectPlayer</object>
     <object>objects\parentGround</object>
+    <object>objects\objectHud</object>
+    <object>objects\objectPlayer</object>
     <object>objects\objectGroundSample</object>
     <object>objects\objectWallSample</object>
-    <object>objects\objectHud</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\roomInit</room>

@@ -64,6 +64,30 @@ fric = 0.35;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Init camera variables
+camx = x;
+camy = y;
+camspeed = 10;          // Dividing factor for dx, dy of camera
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="2">
       <action>
@@ -82,9 +106,42 @@ fric = 0.35;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update room view
-view_xview[0] = x - (view_wport[0] / 2);
-view_yview[0] = y - (view_hport[0] / 2);
+            <string>/// Update camera
+
+// Find distance (delta) and direction
+var dist = point_distance(x, y, camx, camy) / camspeed;
+var dir = point_direction(x, y, camx, camy);
+
+// Calculate dx and dy
+var dx = dist * cos(degtorad(dir));
+var dy = dist * sin(degtorad(dir));
+
+// Apply delta to camera
+camx -= dx;
+camy += dy;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Apply camera to view
+view_xview[0] = camx - (view_wport[0] / 2);
+view_yview[0] = camy - (view_hport[0] / 2);
 </string>
           </argument>
         </arguments>
