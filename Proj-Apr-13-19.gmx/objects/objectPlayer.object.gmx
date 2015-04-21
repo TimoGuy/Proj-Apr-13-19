@@ -28,6 +28,7 @@
             <string>/// Init input variables
 left = vk_left;
 right = vk_right;
+jump = vk_up;
 </string>
           </argument>
         </arguments>
@@ -54,10 +55,11 @@ vsp = 0;
 climb = 3;
 
 maxhsp = 5;
+jumpheight = -15;
 
-deltahsp = 0.75;
-deltavsp = 1;
-fric = 0.5;
+deltahsp = 0.5;
+deltavsp = 0.75;
+fric = 0.35;
 </string>
           </argument>
         </arguments>
@@ -130,6 +132,8 @@ input = false;
           <argument>
             <kind>1</kind>
             <string>/// Interpret Input
+
+// Horizontal movement
 if (keyboard_check(left))
 {
     // Move left
@@ -142,7 +146,21 @@ if (keyboard_check(right))
     // Move left
     hsp += deltahsp;
     input = true;
-} 
+}
+
+// Jumping
+if (keyboard_check_pressed(jump) &amp;&amp; place_meeting(x, y + 1, parentGround))
+{
+    // Jump
+    vsp += jumpheight;
+}
+
+// Falling push-down
+if (vsp &lt; 0 &amp;&amp; !keyboard_check(jump))
+{
+    // Push down
+    vsp += deltavsp;
+}
 </string>
           </argument>
         </arguments>
