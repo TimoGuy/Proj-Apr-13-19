@@ -18,6 +18,7 @@
     <object>objects\parentGround</object>
     <object>objects\objectGroundSample</object>
     <object>objects\objectWallSample</object>
+    <object>objects\objectHud</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\roomInit</room>

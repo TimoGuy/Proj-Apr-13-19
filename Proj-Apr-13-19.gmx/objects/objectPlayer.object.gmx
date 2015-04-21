@@ -53,9 +53,36 @@ hsp = 0;
 vsp = 0;
 climb = 3;
 
-deltahsp = 0.2;
+maxhsp = 5;
+
+deltahsp = 0.75;
 deltavsp = 1;
-fric = 0.15;
+fric = 0.5;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update room view
+view_xview[0] = x - (view_wport[0] / 2);
+view_yview[0] = y - (view_hport[0] / 2);
 </string>
           </argument>
         </arguments>
@@ -163,6 +190,10 @@ if (!input &amp;&amp; place_meeting(x, y + 1, parentGround))
             hsp -= fric;
     }
 }
+
+// Restrict hspeed movement
+if (hsp &lt; -maxhsp) hsp = -maxhsp;
+if (hsp &gt; maxhsp) hsp = maxhsp;
 </string>
           </argument>
         </arguments>
