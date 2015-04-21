@@ -12,6 +12,10 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\view_setup.gml</script>
+    <script>scripts\view_update.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\controlRoom</object>
     <object>objects\parentGround</object>
