@@ -142,7 +142,7 @@ if (keyboard_check(right))
 vsp += deltavsp;
 
 // Apply friction
-if (!input)
+if (!input &amp;&amp; place_meeting(x, y + 1, parentGround))
 {
     if (hsp &lt; 0)
     {
@@ -221,7 +221,7 @@ repeat(ceil(abs(hsp)))
         for (var i = 0; i &lt;= climb; i++)
         {
             // If is collision
-            if (!place_meeting(x + move, y + i + 1, parentGround))
+            if (place_meeting(x + move, y + i + 1, parentGround))
             {
                 // Move
                 x += move;
