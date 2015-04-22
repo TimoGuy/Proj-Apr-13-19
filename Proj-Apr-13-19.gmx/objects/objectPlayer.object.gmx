@@ -116,6 +116,9 @@ global.playerCanJump = true;                // Flags if player can jump
 global.playerCanHorizJump = true;           // Flags if player can do a long jump
 global.playerAdditionalJumps = 5;           // # of jumps allowed in midair (shared by both reg. and long jump)
 
+global.playerHorizJumpHsp = 15;
+global.playerHorizJumpVsp = -10;
+
 global.playerCanDash = true;                // Flags if player can dash
 global.playerDashStamina = 60;              // Max amount of stamina player has (60 = 1 second)
 global.playerStaminaRefill = 0.5;           // Increment at which stamina regenerates
@@ -123,6 +126,10 @@ global.playerStaminaRefill = 0.5;           // Increment at which stamina regene
 // Local flags
 currentDashStamina = global.playerDashStamina;
 currentJumps = 0;
+
+horizDoubleTapInt = 30;                         // Interval window for a double-tap
+horizDoubleTapWaited = horizDoubleTapInt + 1;   // Tracking for the double-tap
+horizJump = false;
 </string>
           </argument>
         </arguments>
@@ -266,12 +273,33 @@ if (place_meeting(x, y + 1, parentGround))
         vsp += jumpheight;
     }
 }
-
-// Falling push-down
-if (vsp &lt; 0 &amp;&amp; !keyboard_check(jump))
+else
 {
-    // Push down
-    vsp += deltavsp;
+    // Falling push-down
+    if (vsp &lt; 0 &amp;&amp; !keyboard_check(jump))
+    {
+        // Push down
+        vsp += deltavsp;
+    }
+}
+
+// Update double-tap flag
+horizDoubleTapWaited++;
+
+// Find if double-tap is executed
+if (keyboard_check_released(dash))
+{
+    // Reset
+    horizDoubleTapWaited = 0;
+}
+
+if (keyboard_check_pressed(dash)
+    &amp;&amp; horizDoubleTapWaited &lt;= horizDoubleTapInt)
+{
+    // Initiate Dash Jump
+    horizJump = true;
+    hsp = global.playerHorizJumpHsp;
+    vsp = global.playerHorizJumpVsp;
 }
 </string>
           </argument>
@@ -321,27 +349,39 @@ if (!input &amp;&amp; place_meeting(x, y + 1, parentGround))
     }
 }
 
-// Restrict hspeed movement
-if (hsp &lt; -currentMaxhsp)
+// If horizontal jump is not initiated
+if (!horizJump)
 {
-    // If recovering from dashing
-    if (hsp &lt; -currentMaxhsp - deltahsp)
-        // Smooth back movement (mult. by 2 for compensation)
-        hsp += deltahsp * 2;
-    else
-        // Cap movement
-        hsp = -currentMaxhsp;
+    // Restrict hspeed movement
+    if (hsp &lt; -currentMaxhsp)
+    {
+        // If recovering from dashing
+        if (hsp &lt; -currentMaxhsp - deltahsp)
+            // Smooth back movement (mult. by 2 for compensation)
+            hsp += deltahsp * 2;
+        else
+            // Cap movement
+            hsp = -currentMaxhsp;
+    }
+    
+    if (hsp &gt; currentMaxhsp)
+    {
+        // If recovering from dashing
+        if (hsp &gt; currentMaxhsp + deltahsp)
+            // Smooth back movement (mult. by 2 for compensation)
+            hsp -= deltahsp * 2;
+        else
+            // Cap movement
+            hsp = currentMaxhsp;
+    }
 }
-
-if (hsp &gt; currentMaxhsp)
+else
 {
-    // If recovering from dashing
-    if (hsp &gt; currentMaxhsp + deltahsp)
-        // Smooth back movement (mult. by 2 for compensation)
-        hsp -= deltahsp * 2;
-    else
-        // Cap movement
-        hsp = currentMaxhsp;
+    // Undo if needed
+    if (place_meeting(x, y + 1, parentGround)
+        &amp;&amp; vsp &gt; 0)
+        // Reset
+        horizJump = false;
 }
 </string>
           </argument>
