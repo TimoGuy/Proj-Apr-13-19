@@ -29,6 +29,8 @@
 left = vk_left;
 right = vk_right;
 jump = vk_up;
+
+dash = vk_space;
 </string>
           </argument>
         </arguments>
@@ -54,7 +56,10 @@ hsp = 0;
 vsp = 0;
 climb = 3;
 
-maxhsp = 5;
+maxhspReg = 5;
+maxhspDash = 10;
+currentMaxhsp = maxhspReg;
+
 jumpheight = -15;
 
 deltahsp = 0.5;
@@ -84,6 +89,40 @@ fric = 0.35;
 camx = x;
 camy = y;
 camspeed = 10;          // Dividing factor for dx, dy of camera
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Init ability variables
+
+// Global abilities
+global.playerCanJump = true;                // Flags if player can jump
+global.playerCanHorizJump = true;           // Flags if player can do a long jump
+global.playerAdditionalJumps = 5;           // # of jumps allowed in midair (shared by both reg. and long jump)
+
+global.playerCanDash = true;                // Flags if player can dash
+global.playerDashStamina = 60;              // Max amount of stamina player has (60 = 1 second)
+global.playerStaminaRefill = 0.5;           // Increment at which stamina regenerates
+
+// Local flags
+currentDashStamina = global.playerDashStamina;
+currentJumps = 0;
 </string>
           </argument>
         </arguments>
@@ -205,11 +244,27 @@ if (keyboard_check(right))
     input = true;
 }
 
-// Jumping
-if (keyboard_check_pressed(jump) &amp;&amp; place_meeting(x, y + 1, parentGround))
+// Get input if on ground
+if (place_meeting(x, y + 1, parentGround))
 {
-    // Jump
-    vsp += jumpheight;
+    // Dashing
+    if (keyboard_check(dash))
+    {
+        // Enable dashing
+        currentMaxhsp = maxhspDash;
+    }
+    else
+    {
+        // Disable dashing
+        currentMaxhsp = maxhspReg;
+    }
+    
+    // Jumping
+    if (keyboard_check_pressed(jump))
+    {
+        // Jump
+        vsp += jumpheight;
+    }
 }
 
 // Falling push-down
@@ -267,8 +322,27 @@ if (!input &amp;&amp; place_meeting(x, y + 1, parentGround))
 }
 
 // Restrict hspeed movement
-if (hsp &lt; -maxhsp) hsp = -maxhsp;
-if (hsp &gt; maxhsp) hsp = maxhsp;
+if (hsp &lt; -currentMaxhsp)
+{
+    // If recovering from dashing
+    if (hsp &lt; -currentMaxhsp - deltahsp)
+        // Smooth back movement (mult. by 2 for compensation)
+        hsp += deltahsp * 2;
+    else
+        // Cap movement
+        hsp = -currentMaxhsp;
+}
+
+if (hsp &gt; currentMaxhsp)
+{
+    // If recovering from dashing
+    if (hsp &gt; currentMaxhsp + deltahsp)
+        // Smooth back movement (mult. by 2 for compensation)
+        hsp -= deltahsp * 2;
+    else
+        // Cap movement
+        hsp = currentMaxhsp;
+}
 </string>
           </argument>
         </arguments>
