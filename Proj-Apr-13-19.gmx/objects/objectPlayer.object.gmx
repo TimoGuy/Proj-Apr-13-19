@@ -52,8 +52,6 @@ dash = vk_space;
           <argument>
             <kind>1</kind>
             <string>/// Init movement variables
-facing = RIGHT;
-
 hsp = 0;
 vsp = 0;
 climb = 3;
@@ -244,7 +242,6 @@ if (keyboard_check(left))
     // Move left
     hsp -= deltahsp;
     input = true;
-    facing = LEFT;
 }
 
 if (keyboard_check(right))
@@ -252,7 +249,6 @@ if (keyboard_check(right))
     // Move left
     hsp += deltahsp;
     input = true;
-    facing = RIGHT;
 }
 
 // Get input if on ground
@@ -269,6 +265,13 @@ if (place_meeting(x, y + 1, parentGround))
         // Disable dashing
         currentMaxhsp = maxhspReg;
     }
+    
+    // Jumping
+    if (keyboard_check_pressed(jump))
+    {
+        // Jump
+        vsp += jumpheight;
+    }
 }
 else
 {
@@ -278,13 +281,6 @@ else
         // Push down
         vsp += deltavsp;
     }
-}
-
-// Jumping
-if (keyboard_check_pressed(jump))
-{
-    // Jump
-    vsp += jumpheight;
 }
 
 // Update double-tap flag
@@ -302,7 +298,7 @@ if (keyboard_check_pressed(dash)
 {
     // Initiate Dash Jump
     horizJump = true;
-    hsp = global.playerHorizJumpHsp * facing;
+    hsp = global.playerHorizJumpHsp;
     vsp = global.playerHorizJumpVsp;
 }
 </string>
@@ -381,9 +377,6 @@ if (!horizJump)
 }
 else
 {
-    // Cap horizontal jump speed
-    hsp = min(max(hsp, -global.playerHorizJumpHsp), global.playerHorizJumpHsp);
-    
     // Undo if needed
     if (place_meeting(x, y + 1, parentGround)
         &amp;&amp; vsp &gt; 0)
