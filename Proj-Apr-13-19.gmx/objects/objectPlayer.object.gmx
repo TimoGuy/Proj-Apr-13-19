@@ -129,7 +129,8 @@ global.playerStaminaRefill = 0.5;           // Increment at which stamina regene
 currentDashStamina = global.playerDashStamina;
 currentJumps = 0;
 
-horizDoubleTapInt = 30;                         // Interval window for a double-tap
+horizDoubleTapInt = 15;                         // Interval window for a double-tap
+readyForNextTap = false;
 horizDoubleTapWaited = horizDoubleTapInt + 1;   // Tracking for the double-tap
 horizJump = false;
 </string>
@@ -293,17 +294,30 @@ horizDoubleTapWaited++;
 // Find if double-tap is executed
 if (keyboard_check_released(dash))
 {
-    // Reset
-    horizDoubleTapWaited = 0;
+    if (horizDoubleTapWaited &lt;= horizDoubleTapInt)
+    {
+        // Reset counter for second tap
+        horizDoubleTapWaited = 0;
+    }
 }
 
-if (keyboard_check_pressed(dash)
-    &amp;&amp; horizDoubleTapWaited &lt;= horizDoubleTapInt)
+if (keyboard_check_pressed(dash))
 {
-    // Initiate Dash Jump
-    horizJump = true;
-    hsp = global.playerHorizJumpHsp * facing;
-    vsp = global.playerHorizJumpVsp;
+    if (horizDoubleTapWaited &lt;= horizDoubleTapInt)
+    {
+        // Flag Dash Jump
+        horizJump = true;
+        horizDoubleTapWaited = horizDoubleTapInt + 1;
+        
+        // Initiate Dash Jump
+        hsp = global.playerHorizJumpHsp * facing;
+        vsp = global.playerHorizJumpVsp;
+    }
+    else
+    {
+        // Reset counter for first tap
+        horizDoubleTapWaited = 0;
+    }
 }
 </string>
           </argument>
