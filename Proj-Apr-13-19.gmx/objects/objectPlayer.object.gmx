@@ -52,6 +52,8 @@ dash = vk_space;
           <argument>
             <kind>1</kind>
             <string>/// Init movement variables
+facing = RIGHT;
+
 hsp = 0;
 vsp = 0;
 climb = 3;
@@ -242,6 +244,7 @@ if (keyboard_check(left))
     // Move left
     hsp -= deltahsp;
     input = true;
+    facing = LEFT;
 }
 
 if (keyboard_check(right))
@@ -249,6 +252,7 @@ if (keyboard_check(right))
     // Move left
     hsp += deltahsp;
     input = true;
+    facing = RIGHT;
 }
 
 // Get input if on ground
@@ -298,7 +302,7 @@ if (keyboard_check_pressed(dash)
 {
     // Initiate Dash Jump
     horizJump = true;
-    hsp = global.playerHorizJumpHsp;
+    hsp = global.playerHorizJumpHsp * facing;
     vsp = global.playerHorizJumpVsp;
 }
 </string>

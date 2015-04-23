@@ -428,5 +428,10 @@
     <option_xbone_texture_page>1024</option_xbone_texture_page>
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
-  <ConfigConstants/>
+  <ConfigConstants>
+    <constants number="2">
+      <constant name="LEFT">-1</constant>
+      <constant name="RIGHT">1</constant>
+    </constants>
+  </ConfigConstants>
 </Config>
