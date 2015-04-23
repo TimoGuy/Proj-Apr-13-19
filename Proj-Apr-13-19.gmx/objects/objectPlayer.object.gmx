@@ -381,6 +381,9 @@ if (!horizJump)
 }
 else
 {
+    // Cap horizontal jump speed
+    hsp = min(max(hsp, -global.playerHorizJumpHsp), global.playerHorizJumpHsp);
+    
     // Undo if needed
     if (place_meeting(x, y + 1, parentGround)
         &amp;&amp; vsp &gt; 0)
