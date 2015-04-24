@@ -118,8 +118,8 @@ global.playerCanJump = true;                // Flags if player can jump
 global.playerCanHorizJump = true;           // Flags if player can do a long jump
 global.playerAdditionalJumps = 5;           // # of jumps allowed in midair (shared by both reg. and long jump)
 
-global.playerHorizJumpHsp = 20;
-global.playerHorizJumpVsp = -10;
+global.playerHorizJumpHsp = 25;             // The hsp of a long jump (vsp=0)
+global.playerHorizJumpTime = 10;            // Amount of time long jump is sustained
 
 global.playerCanDash = true;                // Flags if player can dash
 global.playerDashStamina = 60;              // Max amount of stamina player has (60 = 1 second)
@@ -129,9 +129,11 @@ global.playerStaminaRefill = 0.5;           // Increment at which stamina regene
 currentDashStamina = global.playerDashStamina;
 currentJumps = 0;
 
-horizDoubleTapInt = 15;                         // Interval window for a double-tap
+horizJumpWaited = global.playerHorizJumpTime + 1;   // Time waited so far to flag if jump has ended
+
+horizDoubleTapInt = 15;                             // Interval window for a double-tap
 readyForNextTap = false;
-horizDoubleTapWaited = horizDoubleTapInt + 1;   // Tracking for the double-tap
+horizDoubleTapWaited = horizDoubleTapInt + 1;       // Tracking for the double-tap
 horizJump = false;
 </string>
           </argument>
@@ -290,6 +292,7 @@ if (keyboard_check_pressed(jump))
 
 // Update double-tap flag
 horizDoubleTapWaited++;
+horizJumpWaited++;
 
 // Find if double-tap is executed
 if (keyboard_check_released(dash))
@@ -307,11 +310,12 @@ if (keyboard_check_pressed(dash))
     {
         // Flag Dash Jump
         horizJump = true;
+        horizJumpWaited = 0;
         horizDoubleTapWaited = horizDoubleTapInt + 1;
         
         // Initiate Dash Jump
         hsp = global.playerHorizJumpHsp * facing;
-        vsp = global.playerHorizJumpVsp;
+        vsp = 0;
     }
     else
     {
@@ -341,9 +345,6 @@ if (keyboard_check_pressed(dash))
             <kind>1</kind>
             <string>/// Apply environmental restraints
 
-// Apply gravity
-vsp += deltavsp;
-
 // Apply friction
 if (!input &amp;&amp; place_meeting(x, y + 1, parentGround))
 {
@@ -370,6 +371,9 @@ if (!input &amp;&amp; place_meeting(x, y + 1, parentGround))
 // If horizontal jump is not initiated
 if (!horizJump)
 {
+    // Apply gravity
+    vsp += deltavsp;
+    
     // Restrict hspeed movement
     if (hsp &lt; -currentMaxhsp)
     {
@@ -399,8 +403,7 @@ else
     hsp = min(max(hsp, -global.playerHorizJumpHsp), global.playerHorizJumpHsp);
     
     // Undo if needed
-    if (place_meeting(x, y + 1, parentGround)
-        &amp;&amp; vsp &gt; 0)
+    if (horizJumpWaited &gt; global.playerHorizJumpTime)
         // Reset
         horizJump = false;
 }
