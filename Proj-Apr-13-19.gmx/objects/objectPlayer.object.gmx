@@ -462,10 +462,11 @@ repeat(ceil(abs(hsp)))
     {
         // Check if downward slope
         var solved = false;
-        for (var i = 0; i &lt;= climb; i++)
+        for (var i = 1; i &lt;= climb; i++)
         {
             // If is collision
-            if (place_meeting(x + move, y + i + 1, parentGround))
+            if (place_meeting(x + move, y + i + 1, parentGround)
+                &amp;&amp; !place_meeting(x + move, y + i, parentGround))
             {
                 // Move
                 x += move;

@@ -51,13 +51,11 @@
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="objectPlayer" x="288" y="192" name="inst_2BF34434" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objectGroundSample" x="352" y="224" name="inst_AF5689EF" locked="0" code="" scaleX="2.125" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objectWallSample" x="576" y="0" name="inst_FC10D4E2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objectGroundSample" x="0" y="480" name="inst_1E46C55A" locked="0" code="" scaleX="4.375" scaleY="0.875" colour="4294967295" rotation="0"/>
+    <instance objName="objectPlayer" x="512" y="256" name="inst_2BF34434" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="controlRoom" x="0" y="0" name="inst_F56539BA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objectWallSample" x="1452" y="629" name="inst_5920227C" locked="0" code="" scaleX="1" scaleY="1.75" colour="4294967295" rotation="90"/>
-    <instance objName="objectWallSample" x="736" y="224" name="inst_FC90558D" locked="0" code="" scaleX="12" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="object6" x="416" y="256" name="inst_2C41915D" locked="0" code="" scaleX="10" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="object6" x="1152" y="256" name="inst_7DF8FC1D" locked="0" code="" scaleX="10" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="object6" x="736" y="-64" name="inst_48C6DC17" locked="0" code="" scaleX="13" scaleY="8" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

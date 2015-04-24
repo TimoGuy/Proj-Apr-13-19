@@ -9,6 +9,7 @@
     <sprite>sprites\spriteMaskVertical</sprite>
     <sprite>sprites\spriteGroundSample</sprite>
     <sprite>sprites\spriteWallSample</sprite>
+    <sprite>sprites\spriteGroundSample2</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -23,6 +24,7 @@
     <object>objects\objectPlayer</object>
     <object>objects\objectGroundSample</object>
     <object>objects\objectWallSample</object>
+    <object>objects\object6</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\roomInit</room>
