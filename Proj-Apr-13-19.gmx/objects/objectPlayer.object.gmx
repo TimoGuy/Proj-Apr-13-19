@@ -131,7 +131,7 @@ currentJumps = 0;
 
 horizJumpWaited = global.playerHorizJumpTime + 1;   // Time waited so far to flag if jump has ended
 
-horizDoubleTapInt = 15;                             // Interval window for a double-tap
+horizDoubleTapInt = 25;                             // Interval window for a double-tap
 readyForNextTap = false;
 horizDoubleTapWaited = horizDoubleTapInt + 1;       // Tracking for the double-tap
 horizJump = false;
