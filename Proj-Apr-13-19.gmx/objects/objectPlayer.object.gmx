@@ -118,7 +118,7 @@ global.playerCanJump = true;                // Flags if player can jump
 global.playerCanHorizJump = true;           // Flags if player can do a long jump
 global.playerAdditionalJumps = 5;           // # of jumps allowed in midair (shared by both reg. and long jump)
 
-global.playerHorizJumpHsp = 25;             // The hsp of a long jump (vsp=0)
+global.playerHorizJumpHsp = 30;             // The hsp of a long jump (vsp=0)
 global.playerHorizJumpTime = 10;            // Amount of time long jump is sustained
 
 global.playerCanDash = true;                // Flags if player can dash
